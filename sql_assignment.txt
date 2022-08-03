@@ -1,0 +1,85 @@
+CREATE TABLE status (
+	STAT_ID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	S_ORDER_NO varchar(256) references sales(ORDER_NO),
+	STAT varchar(256)
+)
+
+CREATE TABLE locations (
+	LOC_ID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	LOC_ORDER_NO varchar(256) references sales(ORDER_NO),
+	COUNTRY varchar(256),
+	STATE varchar(256),
+	CITY varchar(256)
+)
+
+CREATE TABLE products (
+	PROD_ID int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	PROD_ORDER_NO varchar(256) references sales(ORDER_NO),
+	PRODUCT_LINE varchar(256),
+	PRODUCT_CODE varchar(256),
+	MSRP int
+)
+
+CREATE TABLE sales (
+	ORDER_NO varchar(256) PRIMARY KEY NOT NULL,
+	ORDER_QTY int, 
+	UNIT_PRICE decimal(10,2),
+	SSALES decimal(10,2),
+	ORDER_DATE varchar(256),
+ 	QUATER_ID int,
+  	MONTH_ID int,
+    	YEAR_ID int,
+   	CUSTOMER_NAME varchar(256),
+    	PHONE varchar(256),
+    	ADDRESS_LINE_1 varchar(256),
+    	ADDRESS_LINE_2 varchar(256),
+    	POSTAL_CODE varchar(256),
+    	TERRITORY varchar(256),
+    	CONTACT_LAST_NAME varchar(256),
+    	CONTACT_FIRST_NAME varchar(256),
+    	DEAL_SIZE varchar(256)
+)
+
+// Few insert examples
+INSERT INTO status (S_ORDER_NO, STAT) VALUES ('101072', 'Shipped');
+INSERT INTO locations (LOC_ORDER_NO, COUNTRY, STATE, CITY) VALUES ('101072', 'USA', 'NY', 'NYC');
+INSERT INTO products (PROD_ORDER_NO, PRODUCT_LINE, PRODUCT_CODE, MSRP) VALUES ('101072', 'Motorcycles', 'S10_1678', 95);
+INSERT INTO sales (ORDER_NO, ORDER_QTY, UNIT_PRICE, SSALES, ORDER_DATE, QUATER_ID, MONTH_ID, YEAR_ID, CUSTOMER_NAME, PHONE, ADDRESS_LINE_1, ADDRESS_LINE_2, POSTAL_CODE, TERRITORY, CONTACT_LAST_NAME, CONTACT_FIRST_NAME, DEAL_SIZE) 
+VALUES ('101072', 30, 95.7, 2871, '2/24/2003  12:00:00 AM', 1, 2, 2003, 'Land of Toys Inc.', '2125557818', '897 Long Airport Avenue', '', '10022', 'NA', 'Yu', 'Kwai', 'Small');
+
+// Total Sales, Total Quantity, Total Discount/Surcharge, COUNTRY, STATE, STATUS
+SELECT locations.COUNTRY, locations.STATE, status.STAT, SUM(sales.SSALES) as 'TOTAL_SALES', SUM(sales.ORDER_QTY) as 'TOTAL_QUANTITY', 
+(SUM(sales.SSALES) - SUM(products.MSRP*sales.ORDER_QTY)) as 'TOTAL DIS/SUR' FROM locations JOIN status on locations.LOC_ORDER_NO=status.S_ORDER_NO 
+JOIN sales on status.S_ORDER_NO=sales.ORDER_NO JOIN products on sales.ORDER_NO=products.PROD_ORDER_NO 
+GROUP BY locations.COUNTRY, locations.STATE, status.STAT;
+
+// Highest Selling Product Line in a Country, Total Quantity Sold, Total Sales, Total Discount/Surcharge of this Product Line (*)
+SELECT locations.COUNTRY, products.PRODUCT_LINE, SUM(sales.SSALES) as 'TOTAL_SALES', SUM(sales.ORDER_QTY) as 'TOTAL_QUANTITY', 
+(SUM(sales.SSALES) - SUM(products.MSRP*sales.ORDER_QTY)) as 'TOTAL DIS/SUR' FROM locations JOIN products on locations.LOC_ORDER_NO=products.PROD_ORDER_NO 
+JOIN sales on products.PROD_ORDER_NO=sales.ORDER_NO GROUP BY locations.COUNTRY, products.PRODUCT_LINE;
+
+// Most Successful Month for each year and country, Total Sales (*)
+SELECT l.COUNTRY, s.YEAR_ID, s.MONTH_ID, SUM(s.SSALES) as 'TOTAL_SALES' FROM locations l JOIN sales s on l.LOC_ORDER_NO=s.ORDER_NO GROUP BY l.COUNTRY, 
+s.YEAR_ID, s.MONTH_ID;
+
+// Most Successful Quarter for each year and country, Total Sales (*)
+SELECT l.COUNTRY, s.YEAR_ID, s.QUATER_ID, SUM(s.SSALES) as 'TOTAL_SALES' FROM locations l JOIN sales s on l.LOC_ORDER_NO=s.ORDER_NO GROUP BY l.COUNTRY, 
+s.YEAR_ID, s.QUATER_ID;
+
+// Total Sales, Total Quantity, Total Discount/Surcharge, DEAL_SIZE
+SELECT sales.DEAL_SIZE, SUM(sales.SSALES) as 'TOTAL_SALES', SUM(sales.ORDER_QTY) as 'TOTAL_QUANTITY', 
+(SUM(sales.SSALES) - SUM(products.MSRP*sales.ORDER_QTY)) as 'TOTAL DIS/SUR' FROM sales JOIN products on sales.ORDER_NO=products.PROD_ORDER_NO 
+GROUP BY sales.DEAL_SIZE;
+
+// Monthly Total Sales for each Country and Territory
+SELECT locations.COUNTRY, sales.TERRITORY, sales.MONTH_ID, SUM(sales.SSALES) FROM sales JOIN locations ON sales.ORDER_NO=locations.LOC_ORDER_NO 
+GROUP BY locations.COUNTRY, sales.TERRITORY, sales.MONTH_ID;
+
+// Cumulative Total Sales per Month
+SELECT sales.MONTH_ID, SUM(sales.SSALES) FROM sales GROUP BY sales.MONTH_ID;
+
+
+(*) Mention: On these queries I managed to get the data needed. All is left to do is get the maximum value from each group (GROUP BY), 
+but I really couldn`t figure that out on my own
+
+

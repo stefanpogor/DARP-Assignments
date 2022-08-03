@@ -1,0 +1,53 @@
+COUNTRY,STATE,STATUS,TOTAL_SALES,TOTAL_QUANTITY,TOTAL_DISCOUNT/SURCHARGE
+Australia,NSW,In Process,41859.74,532,-4965.26
+Australia,NSW,Shipped,212624.05,2538,-42138.95
+Australia,Queensland,Shipped,46399.18,545,-13544.82
+Australia,Victoria,Disputed,13268.84,164,377.84000000000003
+Australia,Victoria,Shipped,207446.65,2467,-41957.35
+Austria,Not Available,Resolved,24703.2,288,-5297.8
+Austria,Not Available,Shipped,148089.85,1686,-30804.149999999998
+Belgium,Not Available,In Process,8411.95,111,-1499.0500000000002
+Belgium,Not Available,Shipped,86116.93,963,-14763.07
+Canada,BC,Shipped,132090.24,1576,-17781.76
+Canada,Quebec,Shipped,61414.1,717,-15018.9
+Denmark,Not Available,Disputed,17400.0,174,-7182.0
+Denmark,Not Available,Resolved,22022.96,253,-1025.0400000000002
+Denmark,Not Available,Shipped,153324.67,1770,-42210.33
+Finland,Not Available,Shipped,268714.7,3192,-59046.299999999996
+France,Not Available,In Process,35554.31,427,-10638.689999999999
+France,Not Available,Shipped,883703.54,10663,-186142.46
+Germany,Not Available,Shipped,178689.08,2148,-37262.92
+Ireland,Not Available,Shipped,43237.24,490,-11104.76
+Italy,Not Available,Shipped,309402.87,3773,-59296.13
+Japan,Osaka,Shipped,55620.65,692,-13527.35
+Japan,Tokyo,Shipped,97456.04,1150,-19228.96
+Norway,Not Available,Shipped,246115.8,2842,-55424.2
+Philippines,Not Available,Shipped,80291.17,961,-15488.830000000002
+Singapore,Not Available,Shipped,227985.5,2760,-63286.5
+Spain,Not Available,Cancelled,47639.229999999996,605,-3507.770000000001
+Spain,Not Available,Disputed,24502.48,259,-7115.52
+Spain,Not Available,In Process,23280.98,269,-9109.02
+Spain,Not Available,Resolved,51380.58,650,-1707.4199999999992
+Spain,Not Available,Shipped,874902.7,10646,-169624.3
+Sweden,Not Available,Cancelled,44355.48,550,-5550.5199999999995
+Sweden,Not Available,On Hold,20386.92,217,-5730.08
+Sweden,Not Available,Shipped,109521.7,1239,-23222.3
+Switzerland,Not Available,Shipped,93344.91,1078,-28537.09
+UK,Isle of Wight,Shipped,73170.13,895,-6439.87
+UK,Not Available,Cancelled,38855.28,429,-12582.72
+UK,Not Available,Shipped,301177.93,3689,-53568.07
+USA,CA,In Process,5328.0,75,-2312.0
+USA,CA,On Hold,47965.99,571,-9987.01
+USA,CA,Resolved,35761.9,469,-8431.1
+USA,CA,Shipped,1155935.22,13866,-227920.78
+USA,CT,Shipped,190115.82,2205,-45955.18
+USA,MA,On Hold,44166.21,506,-1897.7899999999995
+USA,MA,Shipped,516968.27999999997,6152,-101854.72
+USA,NH,Shipped,101428.5,1248,-28785.5
+USA,NJ,On Hold,46391.08,585,-975.9199999999998
+USA,NJ,Shipped,29196.34,321,-6490.66
+USA,NV,Shipped,72829.05,929,-16132.95
+USA,NY,Cancelled,40345.5,454,-2618.4999999999995
+USA,NY,Shipped,483723.61,5769,-104663.39
+USA,PA,In Process,6166.8,76,-360.20000000000016
+USA,PA,Shipped,210102.91,2433,-53117.090000000004
