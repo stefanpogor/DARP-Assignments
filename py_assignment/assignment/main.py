@@ -8,29 +8,24 @@ def quality_check(csv_file, to_check, postal_code_default, state_territory_defau
     log_file = open("quality_check_log_file.txt", "w+")
 
     for i in range(len(to_check)):
+
         log_file.write("----------------------- " + to_check[i] + " quality check -----------------------" + "\n")
-        null_values = 0
 
-        for index in range(len(df)):
-            if df.loc[index, to_check[i]] is np.nan or df.loc[index, to_check[i]] == 'NA':
-                null_values += 1
-                if to_check[i] == 'POSTAL_CODE':
-                    df.loc[index, to_check[i]] = postal_code_default
-                    log_file.write(
-                        "ORDER_NO : " + str(df.loc[
-                                                index, 'ORDER_NO']) + " : in csv file is Null/NaN/NA : default value added : " + postal_code_default + "\n")
-                else:
-                    df.loc[index, to_check[i]] = state_territory_default
-                    log_file.write(
-                        "ORDER_NO : " + str(df.loc[
-                                                index, 'ORDER_NO']) + " : in csv file is Null/NaN/NA : default value added : " + state_territory_default + "\n")
-
-        if null_values == 0:
-            log_file.write("--* All good *--" + "\n")
-
-        log_file.write(
-            "----------------------- " + str(null_values) + " null values modified -----------------------" + "\n")
-        log_file.write("\n")
+        if df[to_check[i]].isnull().values.any():
+            if to_check[i] == 'POSTAL_CODE':
+                log_file.write(
+                    "The following ORDER_NO : \n" +
+                    df.loc[df[df[to_check[i]].isnull()].index.to_list(), 'ORDER_NO'].to_string(
+                        index=False) + " : in csv file are Null/NaN/NA : default value added : "
+                    + postal_code_default + " : " + str(df[to_check[i]].isnull().sum()) + " null values \n")
+                df[to_check[i]].fillna(str(postal_code_default), inplace=True)
+            else:
+                log_file.write(
+                    "The following ORDER_NO : \n" +
+                    df.loc[df[df[to_check[i]].isnull()].index.to_list(), 'ORDER_NO'].to_string(
+                        index=False) + " : in csv file are Null/NaN/NA : default value added : "
+                    + state_territory_default + " : " + str(df[to_check[i]].isnull().sum()) + " null values \n")
+                df[to_check[i]].fillna(state_territory_default, inplace=True)
 
     log_file.close()
 
@@ -122,7 +117,7 @@ def monthly_total_sales(df, file_name):
 
 
 def cumulative_total(df, file_name):
-    save_csv(df.groupby(["MONTH_ID"])["SALES"].sum(), file_name)
+    save_csv(df.groupby(["MONTH_ID"])["SALES"].cumsum(), file_name)
 
 
 def highest_selling_product_line(df, grouped_by, file_name):
